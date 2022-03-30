@@ -182,12 +182,12 @@ async function handleRequest(request) {
   console.log(path)
   if(!path){
 
-    const html= await fetch(`https://cdn.jsdelivr.net/gh/${github_repo}${github_version}/index.html`)
-    const text = (await html.text())
-        .replaceAll("###GITHUB_REPO###", github_repo)
-        .replaceAll("###GITHUB_VERSION###", github_version)
-        .replaceAll("###DEMO_NOTICE###", demo_notice)
-    
+    // const html= await fetch(`https://cdn.jsdelivr.net/gh/${github_repo}${github_version}/index.html`)
+    // const text = (await html.text())
+    //     .replaceAll("###GITHUB_REPO###", github_repo)
+    //     .replaceAll("###GITHUB_VERSION###", github_version)
+    //     .replaceAll("###DEMO_NOTICE###", demo_notice)
+    text = "hello world"
     return new Response(text, {
     headers: {
       "content-type": "text/html;charset=UTF-8",
