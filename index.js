@@ -141,9 +141,9 @@ async function handleRequest(request) {
     console.log("admin " + admin)
     if(!await checkURL(req["url"]) || (!admin && !demo_mode && !await checkWhite(new URL(req["url"]).host))){
     // 非演示模式下，非白名单地址当成地址不合法处理，
-    return new Response(`{"status":500,"key":": Error: Url illegal."}`, {
+    return new Response(`{"status":500,"msg":": Error: Url illegal."}`, {
       headers: {
-      "content-type": "text/html;charset=UTF-8",
+      "content-type": "application/json",
       "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Methods": "POST",
       },
@@ -153,15 +153,15 @@ async function handleRequest(request) {
     if (typeof(stat) == "undefined"){
       return new Response(`{"status":200,"key":"/`+random_key+`"}`, {
       headers: {
-      "content-type": "text/html;charset=UTF-8",
+      "content-type": "application/json",
       "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Methods": "POST",
       },
     })
     }else{
-      return new Response(`{"status":200,"key":": Error:Reach the KV write limitation."}`, {
+      return new Response(`{"status":500,"msg":": Error:Reach the KV write limitation."}`, {
       headers: {
-      "content-type": "text/html;charset=UTF-8",
+      "content-type": "application/json",
       "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Methods": "POST",
       },
@@ -169,7 +169,7 @@ async function handleRequest(request) {
   }else if(request.method === "OPTIONS"){  
       return new Response(``, {
       headers: {
-      "content-type": "text/html;charset=UTF-8",
+      "content-type": "application/json",
       "Access-Control-Allow-Origin":"*",
       "Access-Control-Allow-Methods": "POST",
       },
