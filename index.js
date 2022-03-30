@@ -47,19 +47,16 @@ async function randomString(len) {
 　　}
 　　return result;
 }
-async function checkURL(url){
-    let str=url;
-    let Expression=/^http(s)?:\/\/([\w-]+\.)+[\w-]+([_\-.,~!*:#()\w\/?%&=]*)?$/;
-    let objExp=new RegExp(Expression);
-    if(objExp.test(str)==true){
-      if (str[0] == 'h')
-        return true;
-      else
-        return false;
-    }else{
-        return false;
-    }
+async function checkURL(string){
+  let url;
+  try {
+    url = new URL(string);
+  } catch (_) {
+    return false;  
+  }
+  return true;
 } 
+
 // 检查域名是否在白名单中，参数只包含域名部分，
 async function checkWhite(host){
     return white_list.some((h) => host == h || host.endsWith('.'+h))
