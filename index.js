@@ -184,6 +184,7 @@ async function handleRequest(request) {
   const requestURL = new URL(request.url)
   const path = requestURL.pathname.split("/")[1]
   console.log(path)
+  
   if(!path){
 
     // const html= await fetch(`https://cdn.jsdelivr.net/gh/${github_repo}${github_version}/index.html`)
@@ -193,11 +194,36 @@ async function handleRequest(request) {
     //     .replaceAll("###DEMO_NOTICE###", demo_notice)
     text = "hello world"
     return new Response(text, {
-    headers: {
-      "content-type": "text/html;charset=UTF-8",
-    },
-  })
+      headers: {
+        "content-type": "text/html;charset=UTF-8",
+      },
+    })
   }
+
+  // 302 redirection 
+  // e.g. https://yourdomain.com/r?target=https://example.com/test
+  if (path === 'r') {
+    target = requestURL.searchParams.get('target')
+
+    if (!target || !checkURL(target)) {
+      return new Response(html404, {
+        headers: {
+          "content-type": "text/html;charset=UTF-8",
+        },
+        status: 404
+      })
+    }
+
+    return new Response(null, {
+      headers: {
+        "content-type": "text/html;charset=UTF-8",
+        "Location": target,
+        "Cache-control": "private; max-age=600"
+      },
+      status: 302
+    })
+  }
+
   const url = await load_url(path)
   if (!url) {
     // 找不到或者超时直接404,
