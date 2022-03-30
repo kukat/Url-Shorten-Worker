@@ -149,9 +149,13 @@ async function handleRequest(request) {
       },
     })}
     let stat,random_key=await save_url(req["url"], req["key"], admin)
+
+    let url = new URL(request.url)
+    let shortUrl = new URL(random_key, url)
+
     console.log("stat " + stat)
     if (typeof(stat) == "undefined"){
-      return new Response(`{"status":200,"key":"/`+random_key+`"}`, {
+      return new Response(`{"status":200,"shortUrl":"${shortUrl.toString()}"}`, {
       headers: {
       "content-type": "application/json",
       "Access-Control-Allow-Origin":"*",
